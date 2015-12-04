@@ -1,0 +1,17 @@
+{
+  "name": "time-or-money-server",
+  "version": "0.0.0",
+  "homepage": "https://github.com/GaiusCoffee/project-tom",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/assets/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "headjs": "~1.0.3"
+  }
+}

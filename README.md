@@ -1,0 +1,3 @@
+Time or Money is a text-based worker placement mobile multiplayer game, where you are a superpowered individual in an alternate future. You are in charge in managing your taskforce and either stop or do crimes. However, instead of amazing graphics, this game has an engaging text-based story and gameplay, as well as in-app purchases to help those with less time but have money to progress. This game is absolutely free, and everything that can be bought with money can also be obtained given a reasonable amount of time.
+
+Every second, the player earns one SG (Sand Grain), and for every dollar spent the player gains one hundred AU (Aurum). 1 AU can buy 144 SGs.
