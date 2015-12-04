@@ -4,6 +4,14 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONObject;
+
+import coffee.gaius.timeormoney.engine.conn;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -11,6 +19,20 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        conn.getInstance(this.getApplicationContext()).test(new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(MainActivity.this.getApplicationContext(),
+                        response.toString(), Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(MainActivity.this.getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
