@@ -6,6 +6,7 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     compression = require('compression'),
+    util = require('./util'),
     db = require('./db'),
     app = express();
 app.use(compression());
@@ -25,48 +26,32 @@ app.use(function(req, res, next) {
 });
 // Set HTTP Timeout
 app.use(function(req, res, next) {
-    res.setTimeout(30000, function() {
-        var r = {
-            status: {
-                code: util.errors.TIMEOUT.code,
-                desc: util.errors.TIMEOUT.desc,
-                tomCode: util.errors.TIMEOUT.tomCode,
-                tomText: util.errors.TIMEOUT.tomText
-            }
-        };
-        res.status(r.status.code).json(r);
-    });
-    next();
+  res.setTimeout(30000, function() {
+    var r = { status: util.getError("NOERROR") };
+    res.status(r.status.code).json(r);
+  });
+  next();
 });
 // Routes
 var api = require('./routes/api');
 app.use('/api', api);
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
-// development error handler will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-// production error handler no stacktraces leaked to user
+// Handle Errors
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+  var r = { status: util.getError("INTERNAL", err.message) };
+  if (err.status){ 
+    r.status.code = err.status; 
+    r.status.desc = err.message; 
+  }
+  res.status(err.status).json(r);
 });
-
+// Start Server
 app.listen(3000, function () {
   console.log('Project TOM Server listening at http://%s:%s', 
-    this.address().address, this.address().port);
+              this.address().address, this.address().port);
 });

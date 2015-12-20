@@ -4,16 +4,13 @@ var express = require('express'),
 
 // GET /
 router.get('/', function(req, res, next) {
-    var r = {
-            status: {
-                code: util.errors.NOERROR.code,
-                desc: util.errors.NOERROR.desc,
-                tomCode: util.errors.NOERROR.tomCode,
-                tomText: util.errors.NOERROR.tomText
-            }
-        };
+    var r = { status: util.getError("NOERROR") };
     r.heartbeat = Date.now();
     res.status(r.status.code).json(r);
 });
+
+// GET /u/
+var u = require('./users');
+router.get('/u', u.parse);
 
 module.exports = router;
